@@ -1,29 +1,17 @@
-﻿Console.WriteLine("Welcome to my application");
+﻿using ConsoleUI;
 
-// Ask for user information
-Person user = new Person();
+StandardMessages.WelcomeMessage();
 
-Console.Write("What is your first name: ");
-user.FirstName = Console.ReadLine();
+Person user = PersonDataCapture.Capture();
 
-Console.Write("What is your last name: ");
-user.LastName = Console.ReadLine();
+bool isUserValid = PersonValidator.Validate(user);
 
-// Checks to be sure the first and last names are valid
-if (string.IsNullOrWhiteSpace(user.FirstName))
+if (isUserValid == false)
 {
-    Console.WriteLine("You did not give us a vlid first name!");
-    Console.ReadLine();
-    return;
-}
-if (string.IsNullOrWhiteSpace(user.LastName))
-{
-    Console.WriteLine("You did not give us a vlid last name!");
-    Console.ReadLine();
+    StandardMessages.EndApplication();
     return;
 }
 
-// Create a user name for the person
-Console.WriteLine($"Your username is { user.FirstName.Substring(0,1) }{ user.LastName }");
+AccountGenerator.CreateAccount(user);
 
-Console.ReadLine();
+StandardMessages.EndApplication();
